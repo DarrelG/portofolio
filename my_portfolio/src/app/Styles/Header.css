@@ -17,3 +17,13 @@
 .Header a:hover{
     color: #d8d8d8;
 }
+
+.Header .images a{
+    opacity: .5;
+    transition: .5 ease-in-out;
+}
+
+.Header .images a:hover{
+    opacity: 1;
+    cursor:  pointer;
+}
