@@ -1,0 +1,19 @@
+.Header{
+    padding: 30px;
+    background-color: #1b1b1b;
+    width: 80%;
+    padding-left: 100px;
+}
+
+.Header .nav{
+    gap: 150px;
+}
+
+.Header a {
+    color: #9C9C9C;
+    transition: color 0.5s ease-in-out;
+}
+
+.Header a:hover{
+    color: #d8d8d8;
+}
