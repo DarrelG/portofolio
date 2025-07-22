@@ -1,8 +1,10 @@
+
 import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import './Styles/index.css';
 import Image from 'next/image';
+import Providers from './Views/components/Providers'
 
 export const metadata: Metadata = {
   title: "Darrel's Portfolio",
@@ -36,7 +38,7 @@ export default function RootLayout({
 
         </div>
 
-        {children}
+        <Providers> {children} </Providers>
       </body>
     </html>
   );
