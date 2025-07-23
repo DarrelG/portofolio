@@ -2,6 +2,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import LoginButton from "./LoginButton";
 
 export default function SessionWrapper() {
     const { data: session } = useSession();
@@ -10,5 +11,5 @@ export default function SessionWrapper() {
         return <p>Welcome, {session.user?.name}</p>;
     }
 
-    return <p>Not logged in</p>;
+    return <LoginButton />;
 }
