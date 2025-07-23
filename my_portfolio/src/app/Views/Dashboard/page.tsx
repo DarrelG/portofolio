@@ -4,6 +4,7 @@ import Image from 'next/image';
 import '../../Styles/index.css';
 import { useEffect, useState } from 'react'
 import supabase from '../../supabaseClient'
+import Cookies from 'js-cookie';
 
 interface MsUser {
     iduser: number;
@@ -25,11 +26,14 @@ export default function Dashboard() {
     const [profile, setProfile] = useState<MsUser | null>(null);
     const [experience, setExp] = useState<MsExperience[]>([]);
 
+    console.log(Cookies);
+
     useEffect(() => {
         async function fetchProfile() {
             const { data, error } = await supabase
                 .from('msuser')
-                .select('*, msprofile!fk_msuser(*)');
+                .select('*, msprofile!fk_msuser(*)')
+                .eq('iduser', 1);
 
             if (error) {
                 console.error('Error fetching profile:', error);
@@ -65,7 +69,7 @@ export default function Dashboard() {
                             </div>
                             <div className="desc">
                                 <p className='text-justify'>
-                                    {profile.msprofile.description ?? 'No description available.'}
+                                    {profile.msprofile?.description ?? 'No description available.'}
                                 </p>
                             </div>
                         </>
@@ -75,7 +79,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="profilePhoto mt-15">
-                    <Image src={profile?.msprofile.profilePict as string} alt="Logo" width={700} height={700} className='rounded-full' />
+                    <Image src={profile?.msprofile.profilePict as string} alt="Logo" width={1000} height={1000} className='rounded-full' />
                 </div>
             </div>
 

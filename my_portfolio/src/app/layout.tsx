@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-screen">
-      <body className={`antialiased`}>
+      <body className="min-h-screen flex flex-col antialiased">
         <div className="Header mx-auto rounded-b-3xl bg-opacity-50">
           <div className="flex justify-between items-center w-full">
             <div className="nav flex gap-[150px]">
@@ -26,7 +26,7 @@ export default function RootLayout({
 
               <Link href="/Views/RecentWork"><div>Recent Work</div></Link>
 
-              <Link href=""><div>Get In Touch</div></Link>
+              <Link href="/Views/GetInTouch"><div>Get In Touch</div></Link>
             </div>
 
             <div className="flex space-x-5 images">
@@ -38,7 +38,14 @@ export default function RootLayout({
 
         </div>
 
-        <Providers> {children} </Providers>
+        <main className="flex-grow"><Providers> {children} </Providers></main>
+        <br />
+        
+        <div className="mt-auto text-center w-screen p-10 footer footer">
+          <hr className="w-3/5 m-auto" />
+          <br />
+          Darrel Gautama - 2025
+        </div>
       </body>
     </html>
   );
