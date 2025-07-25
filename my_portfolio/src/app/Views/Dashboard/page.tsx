@@ -3,59 +3,28 @@
 import Image from 'next/image';
 import '../../Styles/index.css';
 import { useEffect, useState } from 'react'
-import supabase from '../../supabaseClient'
-import Cookies from 'js-cookie';
+import MsProfile from '@/app/Models/MsProfile';
+import MsExperience from '@/app/Models/MsExperience';
+import getProfile from '@/app/Handler/GetProfile';
+import getExperience from '@/app/Handler/GetExperience';
 
-interface MsUser {
-    iduser: number;
-    username: string;
-    userrole: number;
-    msprofile :{
-        description : string;
-        profilePict : string;
-    };
-}
-
-interface MsExperience{
-    idexperience : number;
-    titlename : string;
-    image : string;
-}
-
-export default function Dashboard() {
-    const [profile, setProfile] = useState<MsUser | null>(null);
-    const [experience, setExp] = useState<MsExperience[]>([]);
-
-    console.log(Cookies);
+const Dashboard = () => {
+    const [profile, setProfile] = useState<MsProfile | null>(null);
+    const [experience, setExp] = useState<MsExperience[]| null>(null);
 
     useEffect(() => {
-        async function fetchProfile() {
-            const { data, error } = await supabase
-                .from('msuser')
-                .select('*, msprofile!fk_msuser(*)')
-                .eq('iduser', 1);
+        const getData = async () => {
+            const profile = await getProfile();
+            setProfile(profile);
+        };
 
-            if (error) {
-                console.error('Error fetching profile:', error);
-            } else {
-                setProfile(data?.[0]);
-            }
-        }
+        const getExp = async () => {
+            const experience = await getExperience();
+            setExp(experience);
+        };
 
-        async function getExperience() {
-            const { data, error } = await supabase
-                .from("MsExperience")
-                .select('*');
-
-            if(error){
-                console.error(error);
-            }else{
-                setExp(data);
-            }
-        }
-
-        getExperience();
-        fetchProfile();
+        getExp();
+        getData();
     }, []);
 
     return (
@@ -65,11 +34,11 @@ export default function Dashboard() {
                     {profile ? (
                         <>
                             <div className="fullName mb-20">
-                                <h1 className='text-5xl'>{profile.username}</h1>
+                                <h1 className='text-5xl'>{profile.MsUser?.username}</h1>
                             </div>
                             <div className="desc">
                                 <p className='text-justify'>
-                                    {profile.msprofile?.description ?? 'No description available.'}
+                                    {profile.description ?? 'No description available.'}
                                 </p>
                             </div>
                         </>
@@ -79,7 +48,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="profilePhoto mt-15">
-                    <Image src={profile?.msprofile.profilePict as string} alt="Logo" width={1000} height={1000} className='rounded-full' />
+                    <Image src={profile?.profilePict as string} alt="Logo" width={1000} height={1000} className='rounded-full' />
                 </div>
             </div>
 
@@ -88,7 +57,7 @@ export default function Dashboard() {
                     <h2>Trail of knowledge</h2>
                 </div>
                 <div className="content flex flex-wrap gap-10 text-sm">
-                    {experience.map((edu) => {
+                    {experience?.map((edu) => {
                         const isTarki = edu.image.includes("tarki");
                         return(
                             <div key={edu.idexperience} className='list flex gap-5 rounded-2xl p-3 w-full sm:w-1/2 md:w-5/12'>
@@ -108,3 +77,5 @@ export default function Dashboard() {
         </div>
     );
 }
+
+export default Dashboard;
