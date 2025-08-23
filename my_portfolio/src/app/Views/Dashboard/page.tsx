@@ -17,7 +17,7 @@ const Dashboard = () => {
             const profile = await getProfile();
             setProfile(profile);
         };
-
+        
         const getExp = async () => {
             const experience = await getExperience();
             setExp(experience);
