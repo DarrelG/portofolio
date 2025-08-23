@@ -21,5 +21,5 @@ export default async function getProject(): Promise<GroupedProject> {
         return acc;
     }, {} as GroupedProject);
 
-    return grouped;
+    return grouped; 
 }

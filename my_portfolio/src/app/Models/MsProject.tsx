@@ -3,5 +3,5 @@ export default interface MsProject{
     projecttitle: string;
     projectdesc: string;
     projectperiod: string;
-    projecttype: string;
+    projecttype: string; 
 }

@@ -22,6 +22,6 @@ const RecentWork = async () => {
             ))}
         </div>
     );
-};
+}; 
 
 export default RecentWork;
